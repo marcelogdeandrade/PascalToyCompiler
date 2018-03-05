@@ -13,6 +13,14 @@ class Tokenizer():
             self.actual = None
             return None
         char = self.origin[self.position]
+        if char == '{':
+            while char != '}':
+                self.position += 1
+                if self.position == len(self.origin):
+                    return None
+                char = self.origin[self.position]
+            self.position += 1
+            char = self.origin[self.position]
         while char == ' ' and self.position:
             self.position += 1
             if self.position == len(self.origin):
