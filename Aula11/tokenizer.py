@@ -25,8 +25,8 @@ class Tokenizer():
                 char = self.origin[self.position]
             self.position += 1
             char = self.origin[self.position]
-        #Espacos
-        while char == ' ' and self.position:
+        #Espacos,enter e tabs
+        while char.isspace() and self.position:
             self.position += 1
             if self.position == len(self.origin):
                 return None
@@ -49,7 +49,6 @@ class Tokenizer():
                 self.actual = Token('IDE', identifier)
         #Caracter invalido
         elif char not in self.alphabet:
-            pass
             raise ValueError("Invalid Char")
         #Digitos
         elif char.isdigit():
@@ -87,6 +86,5 @@ class Tokenizer():
                     self.actual = Token('ATRIBUTE', None)
                 else:
                     raise ValueError("Invalid Char")
-                    pass
             self.position += 1
         return self.actual
