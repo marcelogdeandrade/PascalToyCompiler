@@ -1,8 +1,10 @@
 from token import Token
 
 PRINT, BEGIN, END = ('print', 'begin', 'end')
-ALPHABET = ['0','1','2','3','4','5','6','7','8','9','+','-','*','/','(',')',':','=',';']
+ALPHABET = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-',
+            '*', '/', '(",")', ':', '=', ';']
 KEYWORDS = [PRINT, BEGIN, END]
+
 
 class Tokenizer():
     def __init__(self, origin):
@@ -10,13 +12,14 @@ class Tokenizer():
         self.position = 0
         self.actual = None
         self.alphabet = ALPHABET
+
     def selectNext(self):
-        #Final do arquivo
+        # Final do arquivo
         if self.position >= len(self.origin):
             self.actual = None
             return None
         char = self.origin[self.position]
-        #Comentarios
+        # Comentarios
         if char == '{':
             while char != '}':
                 self.position += 1
@@ -25,13 +28,13 @@ class Tokenizer():
                 char = self.origin[self.position]
             self.position += 1
             char = self.origin[self.position]
-        #Espacos,enter e tabs
+        # Espacos,enter e tabs
         while char.isspace() and self.position:
             self.position += 1
             if self.position == len(self.origin):
                 return None
             char = self.origin[self.position]
-        #Identificador
+        # Identificador
         if char.isalpha():
             identifier = char
             while True:
@@ -47,10 +50,10 @@ class Tokenizer():
                 self.actual = Token(identifier, None)
             else:
                 self.actual = Token('IDE', identifier)
-        #Caracter invalido
+        # Caracter invalido
         elif char not in self.alphabet:
             raise ValueError("Invalid Char")
-        #Digitos
+        # Digitos
         elif char.isdigit():
             number = char
             while True:
@@ -63,7 +66,7 @@ class Tokenizer():
                 else:
                     number += char
             self.actual = Token('INT', int(number))
-        #Operacoes e parenteses
+        # Operacoes e parenteses
         else:
             if (char == '+'):
                 self.actual = Token('PLUS', None)
