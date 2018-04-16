@@ -1,0 +1,9 @@
+begin 
+	x:=read(); 
+	print(x); 
+	while x < 100 then 
+		begin 
+			print(x);
+			x := x * 2 
+		end 
+end
