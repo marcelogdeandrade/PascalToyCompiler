@@ -15,8 +15,9 @@ program -> "program" identifier ";" {var_dec} {statements}
 var_dec -> "var" (identifier {"," identifier} ":" type ";")+
 statements -> "begin" statement {";" statement} "end";
 statement -> attribution | statements | print | if | while;
-attribution -> identifier ":=" expression;
+attribution -> identifier ":=" (expression | read);
 print -> "print" "(" expression ")";
+read -> "read" "(" ")";
 if -> "if" rel_expression "then" statements {"else" statements};
 while -> "while" rel_expression "then" statements;
 rel_expression -> expression comp expression;
