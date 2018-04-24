@@ -11,14 +11,14 @@ To-do
 # EBNF
 
 ```
-program -> "program" identifier ";" {var_dec} {statements}
+program -> "program" identifier ";" var_dec? statements?;
 var_dec -> "var" (identifier {"," identifier} ":" type ";")+
 statements -> "begin" statement {";" statement} "end";
 statement -> attribution | statements | print | if | while;
 attribution -> identifier ":=" (expression | read);
 print -> "print" "(" expression ")";
 read -> "read" "(" ")";
-if -> "if" rel_expression "then" statements {"else" statements};
+if -> "if" rel_expression "then" statements ("else" statements")?;
 while -> "while" rel_expression "then" statements;
 rel_expression -> expression comp expression;
 expression -> term { ("+"|"-") term };
@@ -27,8 +27,8 @@ factor -> ("+" | "-") (factor | number | boolean | ("(" expression ")") | identi
 identifier -> letter {letter | digit | "_" };
 comp -> ">" | "<" | "=" | "!=";
 number -> digit+;
-boolean -> true | false;
-type -> int | boolean;
+boolean -> "true" | "false";
+type -> "int" | "boolean";
 letters -> [a-zA-Z];
 digit -> [0-9];
 ```
