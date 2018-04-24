@@ -88,9 +88,11 @@ class BinOp(Node):
 
 class UnOp(Node):
     def Evaluate(self, SymbolTable):
-        value = self.children[0].Evaluate(SymbolTable)
+        value = self.children[0].Evaluate(SymbolTable).getValue()
         if (self.value == "-"):
-            return value * -1
+            result = Value("int")
+            result.setValue(value * -1)
+            return result
         else:
             return
 
