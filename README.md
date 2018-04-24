@@ -36,6 +36,3 @@ digit -> [0-9];
 # SD (Syntatic Diagram)
 
 ![SD](https://raw.githubusercontent.com/marcelogdeandrade/CompilerLogComp/master/syntatic_diagram.png)
-
-
-To-do
