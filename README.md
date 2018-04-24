@@ -29,10 +29,13 @@ comp -> ">" | "<" | "=" | "!=";
 number -> digit+;
 boolean -> "true" | "false";
 type -> "int" | "boolean";
-letters -> [a-zA-Z];
+letter -> [a-zA-Z];
 digit -> [0-9];
 ```
 
 # SD (Syntatic Diagram)
+
+![SD](https://raw.githubusercontent.com/marcelogdeandrade/CompilerLogComp/master/syntatic_diagram.svg)
+
 
 To-do
