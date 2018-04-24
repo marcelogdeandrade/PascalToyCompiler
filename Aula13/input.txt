@@ -1,0 +1,23 @@
+program marcelo;
+
+var x,y: int;
+	z: boolean;
+
+begin 
+	x:=read(); 
+	print(x); 
+	z:=false;
+	while x < 100 then 
+		begin
+			if true = z then
+				begin
+					print(x);
+					x := x * 2 
+				end
+			else
+				begin
+					print(x);
+					x := x * 5
+				end
+		end
+end.
