@@ -1,12 +1,13 @@
 program marcelo;
 
 var x,y: int;
-	z: boolean;
+	z,k: boolean;
 
 begin 
 	x:=read(); 
 	print(x); 
-	z:=false;
+	z:= true;
+	z:= not z;
 	while x < 100 then 
 		begin
 			if true = z then

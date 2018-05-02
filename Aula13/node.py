@@ -36,6 +36,12 @@ class BinOp(Node):
             result = Value("int")
             result.setValue(value_sub)
             return result
+        elif (self.value == "or"):
+            if not self.same_type(value1_obj, value2_obj):
+                raise ValueError("Operands must be the same type")
+            value_sub = value1 or value2
+            result = Value("boolean")
+            result.setValue(value_sub)
         elif (self.value == "*"):
             if not self.same_type(value1_obj, value2_obj):
                 raise ValueError("Operands must be the same type")
@@ -50,6 +56,12 @@ class BinOp(Node):
             result = Value("int")
             result.setValue(value_div)
             return result
+        elif (self.value == "and"):
+            if not self.same_type(value1_obj, value2_obj):
+                raise ValueError("Operands must be the same type")
+            value_div = value1 and value2
+            result = Value("boolean")
+            result.setValue(value_div)
         elif (self.value == ":="):
             SymbolTable.setSymbol(value1, value2)
         elif (self.value == ">"):
@@ -88,11 +100,19 @@ class BinOp(Node):
 
 class UnOp(Node):
     def Evaluate(self, SymbolTable):
-        value = self.children[0].Evaluate(SymbolTable).getValue()
+        value_obj = self.children[0].Evaluate(SymbolTable)
+        value = value_obj.getValue()
         if (self.value == "-"):
             result = Value("int")
             result.setValue(value * -1)
             return result
+        elif (self.value == "not"):
+            if value_obj.type == "boolean":
+                result = Value("boolean")
+                result.setValue(not value)
+                return result
+            else:
+                raise ValueError("Operand must be a boolean")
         else:
             return
 

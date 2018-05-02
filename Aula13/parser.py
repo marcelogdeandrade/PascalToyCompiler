@@ -91,6 +91,7 @@ class Parser():
         if token.type == "begin":
             result = Statements(None, [])
             while True:
+                self.tokens.selectNext()
                 result.children.append(self.parseStatement())
                 token = self.tokens.actual
                 if token.type == "SEMI_COLON":
@@ -109,7 +110,7 @@ class Parser():
         return result
 
     def parseStatement(self):
-        token = self.tokens.selectNext()
+        token = self.tokens.actual
         if token.type == "begin":
             result = self.parseStatements()
         elif token.type == "IDE":
@@ -175,11 +176,11 @@ class Parser():
         token = self.tokens.actual
         if (token.type == "then"):
             self.tokens.selectNext()
-            statement1 = self.parseStatements()
+            statement1 = self.parseStatement()
             token = self.tokens.actual
             if (token.type == "else"):
                 self.tokens.selectNext()
-                statement2 = self.parseStatements()
+                statement2 = self.parseStatement()
             else:
                 statement2 = NoOp(None, [])
             result = If(None, [comp, statement1, statement2])
@@ -209,7 +210,7 @@ class Parser():
         token = self.tokens.actual
         if (token.type == "then"):
             self.tokens.selectNext()
-            statement1 = self.parseStatements()
+            statement1 = self.parseStatement()
             token = self.tokens.actual
             result = While(None, [comp, statement1])
         else:
@@ -224,11 +225,17 @@ class Parser():
             if token is None:
                 break
             if token.type == "PLUS":
+                self.tokens.selectNext()
                 second_value = self.parseTerm()
                 result = BinOp("+", [result, second_value])
             elif token.type == "MINUS":
+                self.tokens.selectNext()
                 second_value = self.parseTerm()
                 result = BinOp("-", [result, second_value])
+            elif token.type == "or":
+                self.tokens.selectNext()
+                second_value = self.parseTerm()
+                result = BinOp("or", [result, second_value])
             else:
                 break
         return result
@@ -247,6 +254,10 @@ class Parser():
                 self.tokens.selectNext()
                 second_value = self.parseFactor()
                 result = BinOp("/", [result, second_value])
+            elif token.type == "and":
+                self.tokens.selectNext()
+                second_value = self.parseFactor()
+                result = BinOp("and", [result, second_value])
             else:
                 break
         return result
@@ -271,6 +282,10 @@ class Parser():
             self.tokens.selectNext()
             result = self.parseFactor()
             result = UnOp("-", [result])
+        elif token.type == "not":
+            self.tokens.selectNext()
+            result = self.parseFactor()
+            result = UnOp("not", [result])
         elif token.type == "PLUS":
             self.tokens.selectNext()
             result = self.parseFactor()
