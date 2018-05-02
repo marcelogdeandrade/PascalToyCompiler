@@ -39,9 +39,10 @@ class BinOp(Node):
         elif (self.value == "or"):
             if not self.same_type(value1_obj, value2_obj):
                 raise ValueError("Operands must be the same type")
-            value_sub = value1 or value2
+            value_or = value1 or value2
             result = Value("boolean")
-            result.setValue(value_sub)
+            result.setValue(value_or)
+            return result
         elif (self.value == "*"):
             if not self.same_type(value1_obj, value2_obj):
                 raise ValueError("Operands must be the same type")
@@ -59,9 +60,10 @@ class BinOp(Node):
         elif (self.value == "and"):
             if not self.same_type(value1_obj, value2_obj):
                 raise ValueError("Operands must be the same type")
-            value_div = value1 and value2
+            value_and = value1 and value2
             result = Value("boolean")
-            result.setValue(value_div)
+            result.setValue(value_and)
+            return result
         elif (self.value == ":="):
             SymbolTable.setSymbol(value1, value2)
         elif (self.value == ">"):
@@ -140,7 +142,8 @@ class BoolVal(Node):
 
 class Identifier(Node):
     def Evaluate(self, SymbolTable):
-        return SymbolTable.getSymbol(self.value)
+        value = SymbolTable.getSymbol(self.value)
+        return value
 
 
 class NoOp(Node):

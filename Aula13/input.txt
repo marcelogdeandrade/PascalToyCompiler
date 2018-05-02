@@ -8,6 +8,7 @@ begin
 	print(x); 
 	z:= true;
 	z:= not z;
+	k:= z or z;
 	while x < 100 then 
 		begin
 			if true = z then
