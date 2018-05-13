@@ -15,10 +15,10 @@ def read_file(file_name):
 
 
 def main():
-        test = read_file("input.txt")
+        test = read_file("input2.txt")
         try:
             parser = Parser(test)
-            symbolTable = SymbolTable()
+            symbolTable = SymbolTable(None)
             result = parser.parseProgram()
             # percorrer_arvore(result)
             result.Evaluate(symbolTable)

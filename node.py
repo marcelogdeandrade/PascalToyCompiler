@@ -1,4 +1,5 @@
 from value import Value
+from symbolTable import SymbolTable as SymbolTableClass
 
 
 class Node():
@@ -198,3 +199,41 @@ class VarDec(Node):
     def Evaluate(self, SymbolTable):
         for child in self.children:
             child.Evaluate(SymbolTable)
+
+
+class FuncDec(Node):
+    def Evaluate(self, SymbolTable):
+        SymbolTable.createSymbol(self.value, "func")
+        SymbolTable.setSymbol(self.value, self)
+
+
+class Funcs(Node):
+    def Evaluate(self, SymbolTable):
+        for func in self.children:
+            func.Evaluate(SymbolTable)
+
+
+class FuncCall(Node):
+    def Evaluate(self, SymbolTable):
+        func_name = self.value
+        func_node = SymbolTable.getSymbol(func_name, "func").getValue()
+        funcSymbolTable = SymbolTableClass(SymbolTable)
+        var_dec = func_node.children[0]
+        args = [x.children[0] for x in var_dec.children]
+        func_node.children[0].Evaluate(funcSymbolTable)
+        if (len(args) != len(self.children)):
+            raise ValueError("Number of arguments must \
+                              be the same as declaration")
+        for i in range(len(args)):
+            symbol = args[i].Evaluate(funcSymbolTable).getValue()
+            symbol_type = funcSymbolTable.getSymbol(symbol).getType()
+            value_obj = self.children[i].Evaluate(SymbolTable)
+            if (symbol_type != value_obj.getType()):
+                raise ValueError("Function argument must be \
+                                   the same as declared")
+            value = value_obj.getValue()
+            funcSymbolTable.setSymbol(symbol, value)
+        for i in range(1, len(func_node.children)):
+            func_node.children[i].Evaluate(funcSymbolTable)
+        result = funcSymbolTable.getSymbol(func_name)
+        return result

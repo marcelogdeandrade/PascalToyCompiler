@@ -1,0 +1,51 @@
+program teste;
+	var a, b: int;
+		x: boolean;
+
+	function fat(n: int): int;
+		var i: int;
+
+		function inc(x: int): int;
+			var i: int;
+			begin
+				i := x + 1;
+				inc := i
+			end
+
+		begin
+			fat := 1;
+			i := 2;
+			while i < n + 1 then
+				begin
+					fat := fat * i;
+					i := inc(i)
+				end
+		end
+
+	function soma(x, y: int): int;
+		var i: int;
+		begin
+			i := x + y;
+			soma := i
+		end
+
+	function fib(n: int): int;
+		begin
+			if n = 0 then
+				fib := 0
+			else
+				if n = 1 then
+					fib := 1
+				else
+					fib := fib(n - 1) + fin(n - 2)
+		end
+
+	begin
+		x := true;
+		a := 3;
+		a := soma(a, 4);
+
+		print(a);
+		b := fat(5);
+		print(fat(2) + b)
+	end.
