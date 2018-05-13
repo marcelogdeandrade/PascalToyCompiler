@@ -11,8 +11,10 @@ To-do
 # EBNF
 
 ```
-program = "program", identifier, ";", var_dec?, statements?;
-var_dec = "var", (identifier, {,",", identifier}, ":", type, ";")+
+program = "program", identifier, ";", block, ".";
+functions = {"function", identifier, "(", var_dec, ")", ";", block;
+block = functions?, ("var", var_dec)?, statements?;
+var_dec = (identifier, {,",", identifier}, ":", type, ";")+
 statements = "begin", statement, {";", statement}, "end";
 statement = attribution | statements | print | if | while;
 attribution = identifier, ":=", (expression | read);
@@ -23,7 +25,8 @@ while = "while", rel_expression, "do", statement;
 rel_expression = expression, {comp, expression};
 expression = term, { ("+"|"-"|"or"), term, };
 term = factor, { ("*" | "/" | "and"), factor };
-factor = ("+" | "-" | "not"), (factor | number | boolean | ("(" expression ")") | identifier);
+factor = ("+" | "-" | "not"), (factor | number | boolean | ("(" expression ")") | identifier | func_call);
+func_call = identifier, "(", {expression , ","}, ")";
 identifier = letter, {letter | digit | "_" };
 comp = ">" | "<" | "=" | "!=";
 number = digit+;
