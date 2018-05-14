@@ -12,21 +12,21 @@ To-do
 
 ```
 program = "program", identifier, ";", block, ".";
-functions = {"function", identifier, "(", var_dec, ")", ";", block;
-block = functions?, ("var", var_dec)?, statements?;
+functions = {"function", identifier, "(", var_dec, ")", ";", block};
+block = [functions], ["var", var_dec], [statements];
 var_dec = (identifier, {,",", identifier}, ":", type, ";")+
 statements = "begin", statement, {";", statement}, "end";
 statement = attribution | statements | print | if | while;
 attribution = identifier, ":=", (expression | read);
 print = "print", "(", expression, ")";
 read = "read", "(", ")";
-if = "if", rel_expression, "then", statement, ("else" statement")?;
+if = "if", rel_expression, "then", statement, ["else" statement"];
 while = "while", rel_expression, "do", statement;
 rel_expression = expression, {comp, expression};
 expression = term, { ("+"|"-"|"or"), term, };
 term = factor, { ("*" | "/" | "and"), factor };
 factor = ("+" | "-" | "not"), (factor | number | boolean | ("(" expression ")") | identifier | func_call);
-func_call = identifier, "(", {expression , ","}, ")";
+func_call = identifier, "(", [expression, {",", expression}], ")";
 identifier = letter, {letter | digit | "_" };
 comp = ">" | "<" | "=" | "!=";
 number = digit+;
