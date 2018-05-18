@@ -3,19 +3,19 @@ from token import Token
 PRINT, BEGIN, END, IF, THEN, ELSE, \
     WHILE, OR, AND, NOT, READ, PROGRAM, \
     VAR, INT, BOOLEAN, \
-    TRUE, FALSE, \
+    TRUE, FALSE, DO, \
     FUNCTION = ('print', 'begin',
                 'end', 'if', 'then',
                 'else', 'while',
                 'or', 'and', 'not', 'read',
                 'program', 'var', 'int',
-                'boolean', 'true', 'false', 'function')
+                'boolean', 'true', 'false', 'function', 'do')
 
 ALPHABET = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-',
             '*', '/', '(', ')', ':', '=', ';', '<', '>', '!', '.', ',']
 KEYWORDS = [PRINT, BEGIN, END, IF, THEN, ELSE, WHILE,
             OR, AND, NOT, READ, PROGRAM, VAR,
-            INT, BOOLEAN, TRUE, FALSE, FUNCTION]
+            INT, BOOLEAN, TRUE, FALSE, FUNCTION, DO]
 
 TYPES = [INT, BOOLEAN]
 

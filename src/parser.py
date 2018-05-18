@@ -1,8 +1,8 @@
 from tokenizer import Tokenizer
 from node import (BinOp, UnOp, IntVal, NoOp, Print,
                   Identifier, Statements, StrVal, If,
-                  While, Read, Program, VarDec, BoolVal,
-                  FuncDec, Funcs, FuncCall)
+                  While, Read, Program, MultiVarDec, BoolVal,
+                  FuncDec, Funcs, FuncCall, VarDec, Assignment)
 
 
 class Parser():
@@ -92,7 +92,7 @@ class Parser():
                              {}".format(self.tokens.position))
             token = self.tokens.selectNext()
             if token.type == "TYPE":
-                arguments = VarDec(None, [])
+                arguments = MultiVarDec(None, [])
                 for var_name in list_arguments:
                     var_name = StrVal(var_name, [])
                     value = StrVal(token.value, [])
@@ -133,7 +133,7 @@ class Parser():
 
     def parseVariables(self):
         token = self.tokens.actual
-        result = VarDec(None, [])
+        result = MultiVarDec(None, [])
         if token.type != "begin":
             if token.type == "var":
                 token = self.tokens.selectNext()
@@ -158,7 +158,7 @@ class Parser():
                         for var_name in list_vars:
                             var_name = StrVal(var_name, [])
                             value = StrVal(token.value, [])
-                            variable = BinOp(":", [var_name, value])
+                            variable = VarDec(None, [var_name, value])
                             result.children.append(variable)
                         token = self.tokens.selectNext()
                         if token.type == "SEMI_COLON":
@@ -233,7 +233,7 @@ class Parser():
                 value2 = self.parseRead()
             else:
                 value2 = self.parseExpression()
-            result = BinOp(":=", [value1, value2])
+            result = Assignment(None, [value1, value2])
         else:
             raise ValueError("Invalid token, expecting a := on position {}"
                              .format(self.tokens.position))
@@ -306,13 +306,13 @@ class Parser():
     def parseWhile(self):
         comp = self.parseRelExpression()
         token = self.tokens.actual
-        if (token.type == "then"):
+        if (token.type == "do"):
             self.tokens.selectNext()
             statement1 = self.parseStatement()
             token = self.tokens.actual
             result = While(None, [comp, statement1])
         else:
-            raise ValueError("Invalid token, expecting a then on \
+            raise ValueError("Invalid token, expecting a do on \
                              position {}".format(self.tokens.position))
         return result
 

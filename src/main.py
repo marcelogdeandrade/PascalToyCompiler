@@ -1,5 +1,6 @@
 from parser import Parser
 from symbolTable import SymbolTable
+from assembly import AssemblyCode
 
 
 def percorrer_arvore(raiz):
@@ -15,13 +16,15 @@ def read_file(file_name):
 
 
 def main():
-        test = read_file("input2.txt")
+        test = read_file("input3.txt")
         try:
             parser = Parser(test)
             symbolTable = SymbolTable(None)
             result = parser.parseProgram()
             # percorrer_arvore(result)
             result.Evaluate(symbolTable)
+            print(AssemblyCode.assembly_code)
+            AssemblyCode.writeFile("teste.asm")
         except ValueError as err:
             print(err)
 

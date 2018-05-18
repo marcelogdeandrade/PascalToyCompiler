@@ -14,5 +14,5 @@ program teste;
 		end
 
 	begin
-		print(fib(25))
+		print(fib(8))
 	end.
