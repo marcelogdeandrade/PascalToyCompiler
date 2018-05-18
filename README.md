@@ -2,8 +2,6 @@
 
 Pascal simplified compiler written in python without external dependencies
 
-**Project under development, updated version on last "Aula" folder**
-
 # Features
 
 To-do
